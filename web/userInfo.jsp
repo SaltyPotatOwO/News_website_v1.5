@@ -29,7 +29,7 @@
             <div class="container-fluid">
                 <!-- NAVBAR -->
                 <div class="navbar-logo col-md-3">
-                    <a class="navbar-brand" href="index.html">
+                    <a class="navbar-brand" href="MainPage">
                         <img style="width: 100px;" src="image/branding/vice logo.png" alt="">
                     </a>
                 </div>
