@@ -39,7 +39,7 @@
                 <div class="collapse navbar-collapse col-md-6" id="navbarNavDropdown">
                     <ul class="navbar-nav">
                         <%
-                            HashMap<Integer,Category> cat_name = (HashMap<Integer,Category>) session.getAttribute("cat_list");
+                            HashMap<Integer ,Category> cat_name = (HashMap<Integer,Category>) session.getAttribute("cat_list");
                         %>
                         <c:forEach items="<%= cat_name %>" var = "cat_name" >
                             <div class="nav-item">
