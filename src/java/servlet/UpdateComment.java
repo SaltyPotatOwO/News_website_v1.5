@@ -27,15 +27,16 @@ public class UpdateComment extends HttpServlet {
             CommentDAO commentDAO = new CommentDAO();
             int comment_id = Integer.parseInt(request.getParameter("comment_id"));
             int news_id = Integer.parseInt(request.getParameter("news_id"));
-            
             String updateRequest = request.getParameter("action");
+            System.out.println(updateRequest);
             if (updateRequest == null || updateRequest.length() == 0) {
                 String comment_content = request.getParameter("comment_content");
                 Comments comment = new Comments(comment_id, comment_content);
                 commentDAO.updateComments(comment);//update comment into database
+                request.getSession().removeAttribute("update_id");
             } else {
-                request.setAttribute("update_id", comment_id);
-                request.setAttribute("update","true ");
+
+                request.getSession().setAttribute("update_id", comment_id);
             }
 
             response.sendRedirect("GetNews?news_id=" + news_id);

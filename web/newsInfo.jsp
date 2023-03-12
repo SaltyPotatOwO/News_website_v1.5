@@ -155,15 +155,6 @@
             <%
                 for (Comments comments : commentList) {
             %>  
-            <c:if test="${ (requestScope.update == 'true') and (requestScope.update_id == comments.getUser_id()) }">
-                <h1>Update form</h1>
-                <form action="UpdateComment" method="post">
-                    <input type="hidden" name="comment_id" value="${request.comment_id.getComment_id()}" %>
-                    <input type="hidden" name="news_id" value="<%= news.getNews_id()%>">
-                    <textarea id="comment" name="comment_content" placeholder="<%= comments.getCommment_content()%>..." required></textarea>
-                    <input type="submit" value="Submit">
-                </form>    
-            </c:if>
             <c:if test="${(requestScope.update_id.getComment_id() == null)}">  
                 <tr>
                     <td>

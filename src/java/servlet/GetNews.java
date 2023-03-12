@@ -44,7 +44,7 @@ public class GetNews extends HttpServlet {
             CommentDAO commentDAO = new CommentDAO();
             String location = "images/";
             int news_id = Integer.parseInt(request.getParameter("news_id"));
-            
+
             news = newsDAO.getNews(news_id);
             
             int cat_id = news.getCat_id();
