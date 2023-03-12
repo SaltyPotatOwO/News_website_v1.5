@@ -1,5 +1,6 @@
 <%@page import="model.*"%>
 <%@page import="java.util.*"  %>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,19 +37,19 @@
                 <div class="collapse navbar-collapse col-md-5" id="navbarNavDropdown">
                     <ul class="navbar-nav">
                         <%
-                            HashMap<Integer,Category> cat_name = (HashMap<Integer,Category>) session.getAttribute("cat_list");
-                            for (int key : cat_name.keySet()) {
+                            HashMap<Integer ,Category> cat_name = (HashMap<Integer,Category>) session.getAttribute("cat_list");
                         %>
-                        <div class="nav-item">
-                            <a class="nav-link hover-animation-underline" href="Search?cat_id=<%= cat_name.get(key).getId() %>"><%= cat_name.get(key).getName()%></a>
-                        </div>
-                        <%}%>
+                        <c:forEach items="<%= cat_name %>" var = "cat_name" >
+                            <div class="nav-item">
+                                <a class="nav-link hover-animation-underline" href="Search?cat_id=<c:out value="${cat_name.key}"/>"  ><c:out value="${cat_name.value.getName()}"/></a>
+                            </div>
+                        </c:forEach>
                     </ul>
                 </div>
                 <!-- NAVBAR SEARCH -->
                 <div class="col-md-3 navbar-search">
-                    <form action="">
-                        <input style="width: 100%;" type="text" placeholder="Search anything">
+                    <form action="Search">
+                        <input style="width: 100%;" type="text" name="title" placeholder="Search anything">
                         <button style="border: 0px;" type="submit" class="rounded-circle nopadding">
                             <i class="material-icons hover-animation-grow">search</i>
                         </button>
@@ -125,7 +126,7 @@
                             <h6 class="card-text"><%= user_nameList.get(news_list.get(idx).getUser_id()).getName() %></h6>
                         </div>
                     </div>
-                        <a style="position: absolute; width: 100%; height: 100%;" href="GetNews?news_id=<%= news_list.get(idx).getNews_id()%>"></a>
+                    <a style="position: absolute; width: 100%; height: 100%;" href="GetNews?news_id=<%= news_list.get(idx).getNews_id()%>"></a>
                     <%}%>
                 </div>
             </div>

@@ -46,3 +46,6 @@ Comment_id int FOREIGN KEY REFERENCES Comment(Comment_id),
 Comment_content nvarchar(MAX),
 )
 
+
+SELECT * FROM News n
+WHERE User_id = 1;

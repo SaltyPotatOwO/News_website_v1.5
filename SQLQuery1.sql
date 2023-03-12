@@ -1,4 +1,4 @@
-﻿/*CREATE PROC insertUser
+﻿CREATE PROCEDURE insertUser
 @ID INT OUTPUT,
 @pass VARCHAR(20),
 @name NVARCHAR(50),
@@ -20,6 +20,7 @@ BEGIN
 	SELECT @name,@user,@isad,@pass,@gender, @dob
 	SET @ID = (SELECT TOP 1 User_id FROM dbo.UserS ORDER BY User_id DESC)
 END 
+
 DECLARE @out INT;
 EXEC dbo.insertUser @ID = @out OUTPUT, -- int
                     @pass = '123',       -- varchar(20)
@@ -32,8 +33,9 @@ EXEC dbo.insertUser @ID = @out OUTPUT, -- int
 SELECT @out
 SELECT * FROM dbo.UserS
 DELETE FROM dbo.UserS 
-DROP PROC dbo.insertUser
-CREATE PROC getUser
+--DROP PROC dbo.insertUser
+--
+CREATE PROCEDURE getUser
 @ID int
 AS
 BEGIN
@@ -87,6 +89,7 @@ SELECT * FROM dbo.Admintab a, dbo.News n
 WHERE a.User_id = n.User_id AND a.User_id = 1
 */
 ------------category-------
+
 CREATE PROC insertCate
 @name NVARCHAR(50),
 @des NVARCHAR(100)

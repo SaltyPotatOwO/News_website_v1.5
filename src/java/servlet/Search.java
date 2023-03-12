@@ -43,7 +43,7 @@ public class Search extends HttpServlet {
                 }
             }
         } catch (Exception e) {
-            System.out.println("ERROR SEARCHING NEWS");
+            System.out.println(e);
         }
     }
 
@@ -55,13 +55,13 @@ public class Search extends HttpServlet {
             ArrayList<News> listNews = newsDAO.searchTitle(title);
             HashMap<Integer, User> listUser = userDAO.getAllUser();
             
-            request.setAttribute("listNews", listNews);
-            request.setAttribute("listUser", listUser);
+            request.setAttribute("news_list", listNews);
+            request.setAttribute("user_list", listUser);
             request.setAttribute("title", title);
             
-            request.getRequestDispatcher("jsp/SearchResult.jsp").forward(request, response);
+            request.getRequestDispatcher("searchResult.jsp").forward(request, response);
         } catch (Exception e) {
-            System.out.println("ERROR SEARCHING NEWS BY TITLE");
+            System.out.println(e);
         }
     }
 
@@ -71,10 +71,10 @@ public class Search extends HttpServlet {
             userDAO userDAO = new userDAO();
             
             
-            ArrayList<News> listNews = newsDAO.searchCategory(cat_id);
+            ArrayList<News> news_list = newsDAO.searchCategory(cat_id);
             HashMap<Integer, User> user_list = userDAO.getAllUser();
 
-            request.setAttribute("listNews", listNews);
+            request.setAttribute("news_list", news_list);
             request.setAttribute("user_list", user_list);
 
             
@@ -89,14 +89,14 @@ public class Search extends HttpServlet {
             NewsDAO newsDAO = new NewsDAO();
             userDAO userDAO = new userDAO();
             
-            ArrayList<News> listNews = newsDAO.searchTitleCat(title, cat_id);
-            HashMap<Integer, User> listUser = userDAO.getAllUser();
+            ArrayList<News> news_list = newsDAO.searchTitleCat(title, cat_id);
+            HashMap<Integer, User> user_list = userDAO.getAllUser();
 
-            request.setAttribute("listNews", listNews);
-            request.setAttribute("listUser", listUser);
+            request.setAttribute("news_list", news_list);
+            request.setAttribute("user_list", user_list);
             request.setAttribute("title", title);
             
-            request.getRequestDispatcher("jsp/SearchResult.jsp").forward(request, response);
+            request.getRequestDispatcher("searchResult.jsp").forward(request, response);
         } catch (Exception e) {
             System.out.println("ERROR SEARCHING NEWS BY TITLE AND CATEGORY");
         }

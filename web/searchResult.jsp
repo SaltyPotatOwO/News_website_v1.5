@@ -25,8 +25,8 @@
         <nav class="navbar navbar-expand-lg fixed-top">
             <div class="container-fluid">
                 <!-- NAVBAR -->
-                <div class="navbar-logo col-md-2">
-                    <a class="navbar-brand" href="#">
+                <div class="navbar-logo col-md-3">
+                    <a class="navbar-brand" href="MainPage">
                         <img style="width: 100px;" src="image/branding/vice logo.png" alt="">
                     </a>
                 </div>
@@ -36,87 +36,63 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <!-- NAVBAR CATEGORY -->
-                <div class="collapse navbar-collapse col-md-5" id="navbarNavDropdown">
+                <div class="collapse navbar-collapse col-md-6" id="navbarNavDropdown">
                     <ul class="navbar-nav">
                         <%
-                            HashMap<Integer ,Category> cat_name = (HashMap<Integer,Category>) session.getAttribute("cat_list");
+                            HashMap<Integer, Category> cat_name = (HashMap<Integer, Category>) session.getAttribute("cat_list");
                         %>
-                        <c:forEach items="<%= cat_name %>" var = "cat_name" >
+                        <c:forEach items="<%= cat_name%>" var = "cat_name" >
                             <div class="nav-item">
                                 <a class="nav-link hover-animation-underline" href="Search?cat_id=<c:out value="${cat_name.key}"/>"  ><c:out value="${cat_name.value.getName()}"/></a>
                             </div>
                         </c:forEach>
                     </ul>
                 </div>
-                <!-- NAVBAR SEARCH -->
-                <div class="col-md-3 navbar-search">
-                    <form action="Search">
-                        <input style="width: 100%;" type="text" name="title" placeholder="Search anything">
-                        <button style="border: 0px;" type="submit" class="rounded-circle nopadding">
-                            <i class="material-icons hover-animation-grow">search</i>
-                        </button>
-                    </form>
-                </div>
-
-                <!-- NAVBAR PROFILE -->
-                <div class="col-md-2 navbar-login navbar-collapse" id="navbarNavDropdown">
-                    <% String user = "user";
-                         int ID = 0;
-                         if (session.getAttribute("user") != null) {  
-                        User user1 = (User)session.getAttribute("user");
-                        user = user1.getName();
-                        ID = user1.getId();
-                        }%>
-                    <p class="nopadding">Hello, <%= user %></p>
-                    <ul class="navbar-nav">
-                        <li class="nav-item dropdown">
-                            <a class="dropdown-toggle" href="#" id="navbarDropdownMenuLink" id="navbar-icon-user"
-                               role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="material-icons hover-animation-grow">person</i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
-                                <!-- cái này th?ng nào làm jsp thì phân lo?i theo ki?u ng??i dùng -->
-                                <% if (session.getAttribute("user") == null) {  %>
-                                <li><a class="dropdown-item" href="login.jsp">Login</a></li>
-                                <li><a class="dropdown-item" href="login.jsp">Sign up</a></li>
-                                    <%} else{ %>
-                                <li><a class="dropdown-item" href="UserLogout">Log out</a></li>
-                                <li><a class="dropdown-item" href="Profile?id=<%= ID %>">Profile</a></li>
-                                    <%}%>
-                            </ul>
-                        </li>
-                    </ul>
+                <!-- NAVBAR LOGIN -->
+                <div class="navbar-login col-md-3">
+                    <a href="" id="navbar-icon-user">
+                        <i class="material-icons hover-animation-grow">person</i>
+                    </a>
                 </div>
             </div>
         </nav>
-
         <!-- spacer for fixed navbar -->
         <div style="height: 84px;" class="spacer"></div>
-
         <%
+            HashMap<Integer, User> user_nameList = (HashMap<Integer, User>) request.getAttribute("user_list");
             ArrayList<News> news_list = (ArrayList<News>) request.getAttribute("news_list");
-            HashMap<Integer,User> user_nameList = (HashMap<Integer,User>) request.getAttribute("user_list");
+            String title = (String) request.getAttribute("title");
         %>
         <!-- HEADING -->
         <div class="text-center">
-            <h1><%= cat_name.get(news_list.get(0).getCat_id()).getName() %></h1>
+            <h1>Search result for :</h1>
         </div>
         <div class="text-center" style="font-weight: normal">
-            <h2><%= cat_name.get(news_list.get(0).getCat_id()).getDes() %></h2>
+            <h2><%= title%></h2>
         </div>
-        <%             
-            for (int idx = 0; idx < news_list.size(); idx++) {
+
+        <form action="Search" method="get">
+            <input type="hidden" name="title" value="<%=title%>">
+            <select name="cat_id">           
+                <c:forEach items="<%= cat_name%>" var = "cat_name" >
+                    <option value="<c:out value="${cat_name.key}"/>" > <c:out value="${cat_name.value.getName()}"/> </option>
+                </c:forEach>
+            </select>
+            <input type='submit' name='action' value='Filter'>
+        </form>
+        <%
+            for (News news : news_list) {
         %>
         <!-- MAIN-CONTENT -->
         <div class="container-fluid">
             <!-- 4 rows of news -->
             <div class="row nopadding">
                 <div class="card col-md-4 nopadding">
-                    <img src="<%= session.getAttribute("location") %><%= news_list.get(idx).getImage() %>.webp" class="card-img-top" alt="...">
+                    <img src="<%= session.getAttribute("location")%><%= news.getImage()%>.webp" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h3 class="card-title"><%= news_list.get(idx).getTitle()%></h3>
-                        <p class="card-text"><%= news_list.get(idx).getSubtitle()%></p>
-                        <h6 class="card-text"><%= user_nameList.get(news_list.get(idx).getUser_id()).getName() %></h6>
+                        <h3 class="card-title"><%= news.getTitle()%></h3>
+                        <p class="card-text"><%= news.getSubtitle()%></p>
+                        <h6 class="card-text"><%= user_nameList.get(news.getUser_id()).getName()%></h6>
                     </div>
                 </div>
                 <%}%>
