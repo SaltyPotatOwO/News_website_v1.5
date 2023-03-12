@@ -97,6 +97,7 @@
             HashMap<Integer, User> user_nameList = (HashMap<Integer, User>) request.getAttribute("user_list");
             ArrayList<News> listNews = (ArrayList<News>) request.getAttribute("sameCategoryNews");
             ArrayList<Comments> commentList = (ArrayList<Comments>) request.getAttribute("commentList");
+            
         %>
         <!-- spacer for fixed navbar -->
         <div style="height: 84px;" class="spacer"></div>
@@ -127,6 +128,12 @@
                     </div>
                 </div>
             </div>
+            <c:if test="${( sessionScope.user.isIsAdmin() )}" >
+                <form action="DeleteNews" method="post">
+                    <input type="hidden" name="news_id" value="<%= news.getNews_id() %>">
+                    <input type="submit" value="Delete">
+                </form>
+            </c:if>
             <!-- NEWS CONTENT -->
             <div class="news-content">
                 <div class="container-fluid">

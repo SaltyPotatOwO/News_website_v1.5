@@ -1,14 +1,17 @@
+package servlet;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package controller;
+
 
 import dao.NewsDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
+
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -17,6 +20,7 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author Asus
  */
+@WebServlet(name="DeleteNews", urlPatterns={"/DeleteNews"})
 public class DeleteNews extends HttpServlet {
 
 
@@ -40,7 +44,7 @@ public class DeleteNews extends HttpServlet {
             NewsDAO newsDAO = new NewsDAO();
             String rawNewsId = request.getParameter("news_id");
             newsDAO.deleteNews(Integer.parseInt(rawNewsId));//delete by id
-            response.sendRedirect("index.html");
+            response.sendRedirect("MainPage");
         } catch (Exception e) {
             System.out.println("error deleting news");
         }
