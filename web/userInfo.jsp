@@ -12,8 +12,9 @@
         <title>UserInfo</title>
         <!-- Icons -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <!-- Embed Bootstrap -->
-        <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+        <!-- Bootstrap -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
         <!-- Embed Global CSS -->
         <link rel="stylesheet" href="css/styleGlobal.css">
         <!-- Embed category CSS -->
@@ -100,14 +101,14 @@
         <div class="container-fluid">
             <div class="row nopadding">
                 <c:forEach var="saved_news" items="${requestScope.saved_news}">
-                <div class="card col-md-4 nopadding">
-                    <img src="<c:out value="${sessionScope.location}"/><c:out value="${saved_news.getImage()}"/>.webp" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h3 class="card-title"><c:out value="${saved_news.getTitle()}"/></h3>
-                        <p class="card-text"><c:out value="${saved_news.getSubtitle()}"/></p>
-                        <h6 class="card-text"><c:out value="${saved_news.getUser_id()}"/></h6>
+                    <div class="card col-md-4 nopadding">
+                        <img src="<c:out value="${sessionScope.location}"/><c:out value="${saved_news.getImage()}"/>.webp" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h3 class="card-title"><c:out value="${saved_news.getTitle()}"/></h3>
+                            <p class="card-text"><c:out value="${saved_news.getSubtitle()}"/></p>
+                            <h6 class="card-text"><c:out value="${saved_news.getUser_id()}"/></h6>
+                        </div>
                     </div>
-                </div>
                 </c:forEach>
             </div>
         </div>
@@ -126,26 +127,26 @@
             </div>
         </div>
         <c:if test="${sessionScope.user.isIsAdmin()}">
-        <!-- <AUTHOR NAME>'s NEWS TITLE -->
-        <div class="latest-title user-info-titles nopadding">
-            <h1>Your</h1>
-            <h1>NEWS</h1>
-        </div>
+            <!-- <AUTHOR NAME>'s NEWS TITLE -->
+            <div class="latest-title user-info-titles nopadding">
+                <h1>Your</h1>
+                <h1>NEWS</h1>
+            </div>
 
-        <!-- <AUTHOR NAME>'s NEWS -->
+            <!-- <AUTHOR NAME>'s NEWS -->
             <div class="container-fluid">
                 <div class="row nopadding">
                     <c:if test="${sessionScope.user.isIsAdmin()}">
-                    <c:forEach var="posted" items="${requestScope.posted_news}" >
-                    <div class="card col-md-4 nopadding">
-                        <img src="<c:out value="${sessionScope.location}"/><c:out value="${posted.getImage()}"/>.webp" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h3 class="card-title"><c:out value="${posted.getTitle()}"/></h3>
-                            <p class="card-text"><c:out value="${posted.getSubtitle()}"/></p>
-                            <h6 class="card-text"><c:out value="${posted.getUser_id()}"/></h6>
-                        </div>
-                    </div>
-                    </c:forEach>
+                        <c:forEach var="posted" items="${requestScope.posted_news}" >
+                            <div class="card col-md-4 nopadding">
+                                <img src="<c:out value="${sessionScope.location}"/><c:out value="${posted.getImage()}"/>.webp" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <h3 class="card-title"><c:out value="${posted.getTitle()}"/></h3>
+                                    <p class="card-text"><c:out value="${posted.getSubtitle()}"/></p>
+                                    <h6 class="card-text"><c:out value="${posted.getUser_id()}"/></h6>
+                                </div>
+                            </div>
+                        </c:forEach>
                     </c:if>
                 </div>
             </div>

@@ -12,8 +12,9 @@
         <title>Category</title>
         <!-- Icons -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <!-- Embed Bootstrap -->
-        <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+        <!-- Bootstrap -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
         <!-- Embed Global CSS -->
         <link rel="stylesheet" href="css/styleGlobal.css">
         <!-- Embed category CSS -->
@@ -25,7 +26,7 @@
         <nav class="navbar navbar-expand-lg fixed-top">
             <div class="container-fluid">
                 <!-- NAVBAR -->
-                <div class="navbar-logo col-md-2">
+                <div class="navbar-logo col-md-1">
                     <a class="navbar-brand" href="#">
                         <img style="width: 100px;" src="image/branding/vice logo.png" alt="">
                     </a>
@@ -36,12 +37,12 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <!-- NAVBAR CATEGORY -->
-                <div class="collapse navbar-collapse col-md-5" id="navbarNavDropdown">
+                <div class="collapse navbar-collapse col-md-6" id="navbarNavDropdown">
                     <ul class="navbar-nav">
                         <%
                             HashMap<Integer ,Category> cat_name = (HashMap<Integer,Category>) session.getAttribute("cat_list");
                         %>
-                        <c:forEach items="<%= cat_name %>" var = "cat_name" >
+                        <c:forEach items="<%= cat_name %>" var = "cat_name" begin="1" end="6">
                             <div class="nav-item">
                                 <a class="nav-link hover-animation-underline" href="Search?cat_id=<c:out value="${cat_name.key}"/>"  ><c:out value="${cat_name.value.getName()}"/></a>
                             </div>
