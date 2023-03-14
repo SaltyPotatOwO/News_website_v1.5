@@ -46,7 +46,7 @@ public class GetNews extends HttpServlet {
             int news_id = Integer.parseInt(request.getParameter("news_id"));
 
             news = newsDAO.getNews(news_id);
-            
+            System.out.println(news);
             int cat_id = news.getCat_id();
 
             ArrayList<News> sameCategoryNews= newsDAO.searchCategory(cat_id);

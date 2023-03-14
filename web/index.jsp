@@ -23,7 +23,7 @@
         <nav class="navbar navbar-expand-lg fixed-top">
             <div class="container-fluid">
                 <!-- NAVBAR -->
-                <div class="navbar-logo col-md-2">
+                <div class="navbar-logo col-md-1">
                     <a class="navbar-brand" href="#">
                         <img style="width: 100px;" src="image/branding/vice logo.png" alt="">
                     </a>
@@ -34,12 +34,12 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <!-- NAVBAR CATEGORY -->
-                <div class="collapse navbar-collapse col-md-5" id="navbarNavDropdown">
+                <div class="collapse navbar-collapse col-md-6" id="navbarNavDropdown">
                     <ul class="navbar-nav">
                         <%
                             HashMap<Integer ,Category> cat_name = (HashMap<Integer,Category>) session.getAttribute("cat_list");
                         %>
-                        <c:forEach items="<%= cat_name %>" var = "cat_name" >
+                        <c:forEach items="<%= cat_name %>" var = "cat_name" begin="1" end="6">
                             <div class="nav-item">
                                 <a class="nav-link hover-animation-underline" href="Search?cat_id=<c:out value="${cat_name.key}"/>"  ><c:out value="${cat_name.value.getName()}"/></a>
                             </div>
@@ -105,28 +105,27 @@
                         </div>
                         <div class="col-md-4 featured-card-content align-self-center nopadding">
                             <div class="card-body">
-                                <h5 class="card-subtitle"><%= cat_name.get(news_list.get(0).getCat_id()).getName() %></h5><!-- first news -->
-                                <h3 class="card-title"><%= news_list.get(0).getTitle()%></h3>
-                                <p class="card-text"><%= news_list.get(0).getSubtitle()%></p>
+                                <a href="#"><h5 class="card-subtitle"><%= cat_name.get(news_list.get(0).getCat_id()).getName() %></h5></a>
+                                <a href="GetNews?news_id=<%= news_list.get(0).getNews_id()%>" > <h3 class="card-title"><%= news_list.get(0).getTitle()%></h3> </a>
+                                <a href="GetNews?news_id=<%= news_list.get(0).getNews_id()%>" ><p class="card-text"><%= news_list.get(0).getSubtitle()%></p> </a>
                                 <h6 class="card-text"><%= user_nameList.get(news_list.get(0).getUser_id()).getName() %></h6>
                             </div>
                         </div>
                     </div>
-                    <a style="position: absolute; width: 100%; height: 100%;" href="GetNews?news_id=<%= news_list.get(0).getNews_id()%>"></a>
                 </div>
                 <div class="row card-group nopadding">
                     <%
                         for (int idx = 1 ; idx < 5; idx++) { //display 4 top
                     %>
                     <div class="card">
-                        <img src="<%= session.getAttribute("location") %><%= news_list.get(idx).getImage() %>.webp" class="card-img-top" alt="...">
+                        <a href="GetNews?news_id=<%= news_list.get(idx).getNews_id()%>" ><img src="<%= session.getAttribute("location") %><%= news_list.get(idx).getImage() %>.webp" class="card-img-top" alt="..."> </a>
                         <div class="card-body">
-                            <h3 class="card-title"><%= news_list.get(idx).getTitle()%></h3>
-                            <p class="card-text"><%= news_list.get(idx).getSubtitle()%></p>
+                            <a href="#"><h5 class="card-subtitle"><%= cat_name.get(news_list.get(idx).getCat_id()).getName() %></h5></a>
+                            <a href="GetNews?news_id=<%= news_list.get(idx).getNews_id()%>" > <h3 class="card-title"><%= news_list.get(idx).getTitle()%></h3> </a>
+                            <a href="GetNews?news_id=<%= news_list.get(idx).getNews_id()%>" ><p class="card-text"><%= news_list.get(idx).getSubtitle()%></p> </a>
                             <h6 class="card-text"><%= user_nameList.get(news_list.get(idx).getUser_id()).getName() %></h6>
                         </div>
                     </div>
-                    <a style="position: absolute; width: 100%; height: 100%;" href="GetNews?news_id=<%= news_list.get(idx).getNews_id()%>"></a>
                     <%}%>
                 </div>
             </div>

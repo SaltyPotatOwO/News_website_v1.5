@@ -24,7 +24,8 @@ public class NewsDAO {
             DBContext db = new DBContext();
             Connection con = db.getConnection();
             if (con != null) {
-                String sql = "Select * from News";
+                String sql = "Select * from News "
+                        + "ORDER BY News_id desc ;";
                 Statement call = con.createStatement();
                 ResultSet rs = call.executeQuery(sql);
                 while (rs.next()) {             //needed even if just 1 row       
@@ -46,35 +47,35 @@ public class NewsDAO {
         return list;
     }
 
-    public ArrayList<News> getListNews(int amountOfNews) {//get x amount of latest news
-        ArrayList<News> listNews = new ArrayList<>();
-        News news;
-        try {
-            DBContext db = new DBContext();
-            Connection con = db.getConnection();
-            Statement st = con.createStatement();
-            String sql = "SELECT TOP " + amountOfNews + " * "
-                    + "FROM News n, Category c "
-                    + "WHERE n.Cat_id = c.Cat_id "
-                    + "ORDER BY n.News_id desc ;";
-            ResultSet rs = st.executeQuery(sql);
-            while (rs.next()) {
-                news = new News();
-                news.setUser_id(rs.getInt("User_id"));
-                news.setNews_id(rs.getInt("News_id"));
-                news.setCat_id(rs.getInt("Cat_id"));
-                news.setTitle(rs.getString("News_title"));
-                news.setSubtitle(rs.getString("News_subtitle"));
-                news.setImage(rs.getString("News_image"));
-                listNews.add(news);
-            }
-            st.close();
-            con.close();
-        } catch (Exception e) {
-            System.out.println("Error");
-        }
-        return listNews;
-    }
+//    public ArrayList<News> getListNews(int amountOfNews) {//get x amount of latest news
+//        ArrayList<News> listNews = new ArrayList<>();
+//        News news;
+//        try {
+//            DBContext db = new DBContext();
+//            Connection con = db.getConnection();
+//            Statement st = con.createStatement();
+//            String sql = "SELECT TOP " + amountOfNews + " * "
+//                    + "FROM News n, Category c "
+//                    + "WHERE n.Cat_id = c.Cat_id "
+//                    + "ORDER BY n.News_id desc ;";
+//            ResultSet rs = st.executeQuery(sql);
+//            while (rs.next()) {
+//                news = new News();
+//                news.setUser_id(rs.getInt("User_id"));
+//                news.setNews_id(rs.getInt("News_id"));
+//                news.setCat_id(rs.getInt("Cat_id"));
+//                news.setTitle(rs.getString("News_title"));
+//                news.setSubtitle(rs.getString("News_subtitle"));
+//                news.setImage(rs.getString("News_image"));
+//                listNews.add(news);
+//            }
+//            st.close();
+//            con.close();
+//        } catch (Exception e) {
+//            System.out.println("Error");
+//        }
+//        return listNews;
+//    }
 
     public News getNews(int news_id) {//get all content in a news given news id
         News news = null;
@@ -126,7 +127,7 @@ public class NewsDAO {
             st.close();
             con.close();
         } catch (Exception e) {
-            System.out.println("Error");
+            System.out.println("amgous");
         }
     }
 
@@ -273,7 +274,7 @@ public class NewsDAO {
                     + "    WHEN (SELECT "
                     + "        COUNT(1) "
                     + "      FROM News ) = 0 THEN 1 "
-                    + "    ELSE IDENT_CURRENT('News') + 1 "
+                    + "    ELSE IDENT_CURRENT('News') "
                     + "  END AS latest_id;";
             ResultSet rs = st.executeQuery(sql);
             rs.next();
@@ -282,7 +283,7 @@ public class NewsDAO {
             st.close();
             con.close();
         } catch (Exception e) {
-            System.out.println("Error");
+            System.out.println("amogus");
         }
         return latest_id;
     }

@@ -5,10 +5,12 @@
 package servlet;
 
 import dao.NewsDAO;
+import dao.userDAO;
 import model.News;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -20,6 +22,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.HashMap;
+import model.User;
 import org.apache.tomcat.util.http.fileupload.FileItemIterator;
 import org.apache.tomcat.util.http.fileupload.FileItemStream;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
@@ -30,6 +35,7 @@ import org.apache.tomcat.util.http.fileupload.util.Streams;
  *
  * @author Asus
  */
+@WebServlet(name = "InsertNews", urlPatterns = {"/InsertNews"})
 public class InsertNews extends HttpServlet {
 
     String location = null;
@@ -72,7 +78,7 @@ public class InsertNews extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+            response.sendRedirect("GetNews");
     }
 
     /**
@@ -92,7 +98,7 @@ public class InsertNews extends HttpServlet {
         try {
 
             ServletFileUpload upload = new ServletFileUpload();
-            response.setContentType("text/plain");
+//            response.setContentType("text/plain");
             FileItemIterator iterator = upload.getItemIterator(request);
             FileItemStream item = iterator.next();
             while (i < 5) {
@@ -111,11 +117,11 @@ public class InsertNews extends HttpServlet {
             String subtitle = dataArray[3];
             String content = dataArray[4];
             String image = dataArray[5];
-            
-            News news = new News (user_id, cat_id, title, subtitle, content, image);
+
+            News news = new News(user_id, cat_id, title, subtitle, content, image);
             dao.insertNews(news);
-            
-            response.sendRedirect("GetListNews");
+
+            response.sendRedirect("GetNews?news_id="+dao.getLatestId());
         } catch (Exception e) {
             System.out.println(e);
         }

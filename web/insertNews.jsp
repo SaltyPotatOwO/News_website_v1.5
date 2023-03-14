@@ -22,6 +22,11 @@
     </head>
 
     <body>
+        <c:if test="${ !(sessionScope.user.isIsAdmin())}" >
+            <% 
+                response.sendRedirect("MainPage");
+            %>
+        </c:if>
         <!-- NAVBAR -->
         <nav class="navbar navbar-expand-lg fixed-top">
             <div class="container-fluid">
@@ -94,35 +99,49 @@
         <!-- spacer for fixed navbar -->
         <div style="height: 84px;" class="spacer"></div>
 
-        <%
-            ArrayList<News> news_list = (ArrayList<News>) request.getAttribute("news_list");
-            HashMap<Integer,User> user_nameList = (HashMap<Integer,User>) request.getAttribute("user_list");
-        %>
         <!-- HEADING -->
-        <div class="text-center">
-            <h1><%= cat_name.get(news_list.get(0).getCat_id()).getName() %></h1>
-        </div>
+
         <div class="text-center" style="font-weight: normal">
-            <h2><%= cat_name.get(news_list.get(0).getCat_id()).getDes() %></h2>
+            <h2>Insert new news form: </h2>
         </div>
-        <%             
-            for (int idx = 0; idx < news_list.size(); idx++) {
-        %>
+
+
+
         <!-- MAIN-CONTENT -->
-        <div class="container-fluid">
-            <!-- 4 rows of news -->
-            <div class="row nopadding">
-                <div class="card col-md-4 nopadding">
-                    <img src="<%= session.getAttribute("location") %><%= news_list.get(idx).getImage() %>.webp" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h3 class="card-title"><%= news_list.get(idx).getTitle()%></h3>
-                        <p class="card-text"><%= news_list.get(idx).getSubtitle()%></p>
-                        <h6 class="card-text"><%= user_nameList.get(news_list.get(idx).getUser_id()).getName() %></h6>
-                    </div>
-                </div>
-                <%}%>
-            </div>
-        </div>
+        <form action='InsertNews' method='post' enctype="multipart/form-data" >
+            <input type="hidden" name="user_id" value="${sessionScope.user.getId()}">
+            <table>
+                <tr>
+                    <td>
+                        <select name="cat_id" required>           
+                            <c:forEach items="<%= cat_name%>" var = "cat_name" >
+                                <option value="<c:out value="${cat_name.key}"/>" > <c:out value="${cat_name.value.getName()}"/> </option>
+                            </c:forEach>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Title:</td>
+                    <td><input type='text' name='title' required></td>
+                </tr>
+                <tr>
+                    <td>Subtitle:</td>
+                    <td><input type='text' name='subtitle' required></td>
+                </tr>
+                <tr>
+                    <td>Content:</td>
+                    <td><input type='text' name='content' required></td>
+                </tr>
+                <tr>
+                    <td>Image:</td>
+                    <td><input type="file" name="image" accept="image/*" required></td>
+                </tr>
+
+                <tr>
+                    <td> <input type='submit' name='action' value='Submit'></td>
+                </tr>
+            </table>
+        </form>
 
         <!-- PAGING NAVIGATOR -->
         <div class="paging-nav">

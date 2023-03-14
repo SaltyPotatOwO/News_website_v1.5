@@ -177,6 +177,16 @@ body {
     border-radius: 0px;
 }
 
+.card-group .card .card-body a {
+    text-decoration: none;
+    color: black;
+}
+
+.featured-card-content .card-body a {
+    color: white;
+    text-decoration: none;
+}
+
 @media screen and (max-width: 768px) {
     .card-group .card {
         margin: 0px;
